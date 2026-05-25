@@ -1,0 +1,42 @@
+# MAVERICK fingerprint: Xiaomi miIO discovery (Mi Home ecosystem)
+#
+# v0 note: this YAML is a documentation artifact. The v0 Go probe at
+# scanners/probe/main.go has this fingerprint hardcoded.
+#
+# miIO is the binary, encrypted, UDP-based protocol used across the Xiaomi
+# smart-home ecosystem: Roborock vacuums, Mi air purifiers, humidifiers,
+# Yeelight bulbs (older models), and many third-party devices that
+# license/clone the protocol. By population this is by far the largest
+# robot-adjacent footprint on the open internet.
+
+id: xiaomi_miio
+description: Xiaomi miIO UDP discovery — Roborock vacuums + Mi smart-home devices
+vendor: xiaomi
+device_classes: [vacuum, air_purifier, humidifier, smart_home]
+
+protocol: udp_raw
+port: 54321
+
+# Hello packet sent to elicit a response. Structure (32 bytes total):
+#   2 bytes magic: 0x21 0x31
+#   2 bytes length: 0x00 0x20 (= 32)
+#   4 bytes unknown1: 0xFF FF FF FF
+#   4 bytes device id: 0xFF FF FF FF (unknown at hello time)
+#   4 bytes stamp:     0xFF FF FF FF (unknown at hello time)
+#  16 bytes checksum:  0xFF * 16    (no token yet)
+probe_hex: "21310020ffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+
+# A miIO-speaking device echoes the magic + length in its response, then
+# fills in the device id, current stamp, and (on older firmware) the
+# 16-byte token. Modern firmware zeros out the token field for security.
+# For population-level fingerprinting we don't care about model/token —
+# any reply with the magic confirms "miIO speaker here."
+match_response:
+  prefix_hex: "21310020"   # response must start with the same magic + length
+  min_length_bytes: 32
+
+references:
+  - https://github.com/OpenMiHome/mihome-binary-protocol/blob/master/doc/PROTOCOL.md
+  - https://github.com/aholstenson/miio/blob/master/docs/protocol.md
+  - https://github.com/marcelrv/XiaomiRobotVacuumProtocol/blob/master/Protocol.md
+  - https://python-miio.readthedocs.io/
