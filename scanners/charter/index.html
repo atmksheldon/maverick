@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MAVERICK research scanner — scanner-fsn1.maverickbot.net</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font: 16px/1.5 system-ui, -apple-system, sans-serif;
+           max-width: 680px; margin: 3rem auto; padding: 0 1rem; color: #222; }
+    h1 { font-size: 1.4rem; }
+    h2 { font-size: 1.1rem; margin-top: 2rem; }
+    code { background: #f4f4f4; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
+    a { color: #1a4dba; }
+    .meta { color: #666; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <h1>MAVERICK research scanner</h1>
+  <p class="meta">Host: <code>scanner-fsn1.maverickbot.net</code> · IPv4 <code>178.105.116.36</code></p>
+
+  <p>This host is a slow, polite network scanner that fingerprints internet-connected robots (vacuums, humanoids, lawn bots, telepresence units, industrial arms) for a research project called <strong>MAVERICK</strong>. If you reached this page because something on your network received a probe from this IP, this page explains why.</p>
+
+  <h2>What we do</h2>
+  <ul>
+    <li>Send slow Masscan SYN sweeps (~1000 packets per second) targeting a narrow set of robot-related ports (e.g. miIO UDP 54321, Tuya MQTT 1883/8883, Unitree SDK 8080/8081, ROS XML-RPC 11311).</li>
+    <li>Record only <em>existence and fingerprint</em>: that a device is reachable, what model it appears to be, and where it geolocates at <strong>city level only</strong>.</li>
+  </ul>
+
+  <h2>What we do not do</h2>
+  <ul>
+    <li>No exploitation. We never attempt to log in, send commands, or trigger device actions.</li>
+    <li>No contents. We never log floorplans, camera frames, audio, telemetry payloads, credentials, or personally identifying information.</li>
+    <li>No street-level geolocation. Records are reverse-geocoded to city level and no finer.</li>
+  </ul>
+
+  <h2>Opt out</h2>
+  <p>If you would like one or more of your IP ranges excluded from future scans, email <a href="mailto:sheldoncooperlives@gmail.com">sheldoncooperlives@gmail.com</a> with the prefix(es) you want removed. Opt-outs honored within 24 hours, no justification required.</p>
+
+  <h2>Verify us</h2>
+  <p>The source code and configuration for this project live publicly at <a href="https://github.com/atmksheldon/maverick">github.com/atmksheldon/maverick</a>. The reverse DNS of this IP forward-confirms to this hostname — the standard pattern for legitimate research scanners.</p>
+
+  <p class="meta">License: Apache 2.0</p>
+</body>
+</html>

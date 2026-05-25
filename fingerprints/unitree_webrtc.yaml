@@ -1,0 +1,39 @@
+# MAVERICK fingerprint: Unitree WebRTC signaling endpoint
+#
+# v0 note: this YAML is a documentation artifact. The v0 Go probe at
+# scanners/probe/main.go has this fingerprint hardcoded. When the project
+# moves to multi-fingerprint support, this file becomes the source of truth
+# and the probe parses it at startup.
+
+id: unitree_webrtc
+description: Unitree quadruped/humanoid WebRTC signaling endpoint (Go2, G1, H1, B2)
+vendor: unitree
+device_classes: [quadruped, humanoid]
+
+protocol: tcp
+port: 8081
+
+probes:
+  - method: GET
+    path: /
+    timeout_ms: 5000
+  - method: GET
+    path: /api
+    timeout_ms: 5000
+
+# Match rules. A host is "matched" if any rule in match_any_ci OR any group
+# in match_all_ci hits. All matching is case-insensitive against the response
+# headers + first 4KB of body.
+match_any_ci:
+  - unitree
+  - master_service
+
+match_all_ci:
+  - [go2, robot]
+  - [g1, humanoid]
+
+references:
+  - https://spectrum.ieee.org/unitree-robot-exploit
+  - https://github.com/legion1581/unitree_webrtc_connect
+  - https://arxiv.org/html/2509.14096v1
+  - https://support.unitree.com/home/en/G1_developer
